@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="C:/Users/axelc/Desktop/Documents/BD-20181214/Exercice V 02/classes111.jar"/>
+	<classpathentry kind="lib" path="D:/TRAVAUX/JAVA/E05_Project/src/jdom.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
