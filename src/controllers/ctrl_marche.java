@@ -5,7 +5,7 @@ import metier.I_Catalogue;
 
 public class ctrl_marche 
 {
-	private static I_Catalogue leCata = Catalogue.getInstance();
+	private static I_Catalogue leCata = ctrl_catalogue.getCatalogue();
 	public static boolean Acheter(String nomP,int qte)
 	{
 		return leCata.acheterStock(nomP, qte);
