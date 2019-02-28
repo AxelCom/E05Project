@@ -64,7 +64,9 @@ public class Catalogue implements I_Catalogue{
 		for (I_Produit leProduit : l) {
 			if(leProduit.getPrixUnitaireHT() > 0 && leProduit.getQuantite() >= 0 && !nameAlreadyUse(leProduit.getNom())) {
 				lesProduits.add(leProduit);
-				connexionProduits.ajouter(leProduit);
+				if(!nameAlreadyUse(leProduit.getNom())) {
+					connexionProduits.ajouter(leProduit);
+				}
 				nbInsert++;
 			}
 		}
@@ -156,6 +158,7 @@ public class Catalogue implements I_Catalogue{
 	public void clear() {
 		this.lesProduits.clear();
 	}
+	
 	private boolean nameAlreadyUse(String nom) {
 		for (String unNom : getNomProduits()) {
 			nom = nom.trim();
