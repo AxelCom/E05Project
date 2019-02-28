@@ -10,7 +10,7 @@ import metier.Produit;
 public class ProduitDAO_Oracle implements I_ProduitDAO {
 	private Connection cn;
 	private Statement st;
-	private PreparedStatement pst;
+	private PreparedStatement pst, pstCata;
 	private ResultSet rs;
 	
 	public ProduitDAO_Oracle() {
@@ -22,6 +22,7 @@ public class ProduitDAO_Oracle implements I_ProduitDAO {
 			cn = DriverManager.getConnection(url, login, mdp);
 			st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			pst = cn.prepareStatement("SELECT nomProduit, prixHT, qte from Produits where nomProduit = ? order by nomProduit asc",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			pstCata = cn.prepareStatement("SELECT nomProduit, prixHT, qte from Produits where nomCatalogue = ? order by nomProduit asc",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			rs = st.executeQuery("SELECT nomProduit, prixHT, qte from Produits order by nomProduit asc");
 		}
 		catch(ClassNotFoundException e){

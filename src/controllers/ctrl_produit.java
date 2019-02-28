@@ -5,7 +5,7 @@ import metier.I_Catalogue;
 
 public class ctrl_produit {
 
-	private static I_Catalogue monCata = Catalogue.getInstance();
+	private static I_Catalogue monCata = ctrl_catalogue.getCatalogue();
 	
 	public static void createProduit(String leNom, double lePrix, int laQuantite)
 	{

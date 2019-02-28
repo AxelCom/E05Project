@@ -6,25 +6,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dal.FabriqueConcreteOracle;
 import dal.I_ProduitDAO;
-import dal.ProduitDAOFactory;
 
 public class Catalogue implements I_Catalogue{
 	
 	private ArrayList<I_Produit> lesProduits = new ArrayList<I_Produit>();
-	private static Catalogue instance = null;
-	private static I_ProduitDAO connexionProduits = ProduitDAOFactory.getInstance().createConnexionI_PrdoduitDAO("XML");
+	private static I_ProduitDAO connexionProduits = FabriqueConcreteOracle.getInstance().createConnexionI_PrdoduitOracle();
+	private String nom;
 	
-	private Catalogue() {
+	public Catalogue(String nom) {
+		this.nom = nom;
 		addProduits(connexionProduits.getProduits());
 	}
 	
-	public static Catalogue getInstance()
-	{
-		if(instance == null)
-		instance = new Catalogue();
-		return instance;
-	}
 	@Override
 	public boolean addProduit(I_Produit produit) {
 		try {
@@ -183,6 +178,11 @@ public class Catalogue implements I_Catalogue{
 		else {					 
 			return "\n" +"Montant total TTC du stock : 0,00 €";
 		}
+	}
+
+	@Override
+	public String getNom() {
+		return nom;
 	}
 }
 
