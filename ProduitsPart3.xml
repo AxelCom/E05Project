@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listeProduits>
+    <produit nom="Pommes">
+        <prixHT>4.0</prixHT>
+        <quantite>12</quantite>
+        <catalogue>Fruits</catalogue>
+    </produit>
+    <produit nom="Salades">
+        <prixHT>8.0</prixHT>
+        <quantite>7</quantite>
+        <catalogue>Legumes</catalogue>
+    </produit>
+    <produit nom="Carottes">
+        <prixHT>5.5</prixHT>
+        <quantite>7</quantite>
+        <catalogue>Legumes</catalogue>
+    </produit>
+    <produit nom="Haricots">
+        <prixHT>3.6</prixHT>
+        <quantite>23</quantite>
+        <catalogue>Legumes</catalogue>
+    </produit>
+<produit nom="Peche"><prixHT>2.5</prixHT><quantite>10</quantite><catalogue>Fruits</catalogue></produit><produit nom="Tagada"><prixHT>2.0</prixHT><quantite>20</quantite><catalogue>Bonbons</catalogue></produit></listeProduits>
