@@ -3,28 +3,31 @@ package controllers;
 import java.util.ArrayList;
 
 import dal.FabriqueConcreteOracle;
+import dal.FabriqueConcreteXML;
+import dal.FabriqueDAO;
 import dal.I_CatalogueDAO;
-import metier.Catalogue;
+import dal.I_ProduitDAO;
 import metier.I_Catalogue;
-import vues.FenetrePrincipale;
 
 public class ctrl_catalogue 
 {
-	private static I_CatalogueDAO cataDAO = FabriqueConcreteOracle.getInstance().createConnexionI_CatalogueOracle();
+	private static FabriqueDAO dao = FabriqueConcreteOracle.getInstance();
+	private static I_CatalogueDAO connexionCatalogue = dao.CreateCatalogueDAO();
+	private static I_ProduitDAO connexionProduits = dao.CreateProduitsDAO(); 
 	private static I_Catalogue leCata = null;
 	
 	 public static String[] AfficherNomsCatalogues()
 	 {
-		 return cataDAO.getNomsCatalogues();
+		 return connexionCatalogue.getNomsCatalogues();
 	 }
 	 
 	 public static int getNbProduitsByCatalogue(String nomCatalogue) {
-		 return cataDAO.getNbProduitsByCatalogue(nomCatalogue);
+		 return connexionCatalogue.getNbProduitsByCatalogue(nomCatalogue);
 	 }
 	 
-	 public static FenetrePrincipale setCatalogue(String nom) {
-		 leCata = cataDAO.getCatalogueByNom(nom);
-		 return new FenetrePrincipale();
+	 public static void setCatalogue(String nom) {
+		 leCata = connexionCatalogue.getCatalogueByNom(nom);
+		 leCata.addProduits(connexionProduits.getProduits());
 	 }
 	 
 	 public static I_Catalogue getCatalogue() {
@@ -43,15 +46,18 @@ public class ctrl_catalogue
 	 }
 	 
 	 public static int getNbCatalogue() {
-		 return cataDAO.getNbCatalogue();
+		 return connexionCatalogue.getNbCatalogue();
 	 }
 	 
 	 public static void supprimerCatalogue(String nom) {
-		 cataDAO.supprimer(nom);
+		 connexionCatalogue.supprimer(nom);
 	 }
 	 
 	 public static void ajouterCatalogue(String nom) {
-		 cataDAO.ajouter(nom);;
+		 connexionCatalogue.ajouter(nom);
+	 }
+	 public static I_ProduitDAO getConnexionProduit() {
+		 return connexionProduits;
 	 }
 	 
 }

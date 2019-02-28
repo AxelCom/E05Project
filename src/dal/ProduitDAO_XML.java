@@ -8,12 +8,13 @@ import org.jdom.*;
 import org.jdom.input.*;
 import org.jdom.output.*;
 
+import controllers.ctrl_catalogue;
 import metier.I_Produit;
 import metier.Produit;
 
 
 public class ProduitDAO_XML {
-	private String uri = "C:/Produits.xml";
+	private String uri = "C:/ProduitsPart3.xml";
 	private Document doc;
 
 	public ProduitDAO_XML() {
@@ -34,6 +35,8 @@ public class ProduitDAO_XML {
 			prod.addContent(prix.setText(String.valueOf(p.getPrixUnitaireHT())));
 			Element qte = new Element("quantite");
 			prod.addContent(qte.setText(String.valueOf(p.getQuantite())));
+			Element catalogue = new Element("catalogue");
+			prod.addContent(catalogue.setText(ctrl_catalogue.getCatalogue().getNom()));
 			root.addContent(prod);
 			return sauvegarde();
 		} catch (Exception e) {
@@ -87,10 +90,12 @@ public class ProduitDAO_XML {
 			List<Element> lProd = root.getChildren("produit");
 
 			for (Element prod : lProd) {
-				String nomP = prod.getAttributeValue("nom");
-				Double prix = Double.parseDouble(prod.getChild("prixHT").getText());
-				int qte = Integer.parseInt(prod.getChild("quantite").getText());
-				l.add(new Produit(nomP, prix, qte));
+				if(prod.getChildText("catalogue").equals(ctrl_catalogue.getCatalogue().getNom())) {
+					String nomP = prod.getAttributeValue("nom");
+					Double prix = Double.parseDouble(prod.getChild("prixHT").getText());
+					int qte = Integer.parseInt(prod.getChild("quantite").getText());
+					l.add(new Produit(nomP, prix, qte));
+				}
 			}
 		} catch (Exception e) {
 			System.out.println("erreur lireTous tous les produits");

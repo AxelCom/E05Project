@@ -1,6 +1,6 @@
 package dal;
 
-public class FabriqueConcreteOracle {
+public class FabriqueConcreteOracle implements FabriqueDAO{
 	
 	private static FabriqueConcreteOracle instance = null;
 	
@@ -13,13 +13,17 @@ public class FabriqueConcreteOracle {
 		}
 		return instance;
 	}
-	
-	public I_ProduitDAO createConnexionI_PrdoduitOracle() {
-			return new ProduitDAO_Oracle();
-	}
-	
-	public I_CatalogueDAO createConnexionI_CatalogueOracle() {
+
+	@Override
+	public I_CatalogueDAO CreateCatalogueDAO() {
 		return new CatalogueDAO_Oracle();
-}
+		
+	}
+
+	@Override
+	public I_ProduitDAO CreateProduitsDAO() {
+		return new ProduitDAO_Oracle();
+		
+	}
 
 }

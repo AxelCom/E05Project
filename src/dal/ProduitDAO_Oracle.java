@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import controllers.ctrl_catalogue;
 import metier.I_Produit;
 import metier.Produit;
 
@@ -21,9 +22,10 @@ public class ProduitDAO_Oracle implements I_ProduitDAO {
 			String mdp = "1109015674V";
 			cn = DriverManager.getConnection(url, login, mdp);
 			st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-			pst = cn.prepareStatement("SELECT nomProduit, prixHT, qte from Produits where nomProduit = ? order by nomProduit asc",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-			pstCata = cn.prepareStatement("SELECT nomProduit, prixHT, qte from Produits where nomCatalogue = ? order by nomProduit asc",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-			rs = st.executeQuery("SELECT nomProduit, prixHT, qte from Produits order by nomProduit asc");
+			pst = cn.prepareStatement("SELECT nomProduit, prixHT, qte, nomCatalogue from ProduitsPart3 where nomProduit = ? order by nomProduit asc",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			pstCata = cn.prepareStatement("SELECT nomProduit, prixHT, qte, nomCatalogue from ProduitsPart3 where nomCatalogue = ? order by nomProduit asc",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			rs = st.executeQuery("SELECT nomProduit, prixHT, qte, nomCatalogue from ProduitsPart3 order by nomProduit asc");
+			//System.out.println(ctrl_catalogue.getCatalogue().getNom());
 		}
 		catch(ClassNotFoundException e){
 			System.out.println("Problème de driver !");
@@ -41,10 +43,12 @@ public class ProduitDAO_Oracle implements I_ProduitDAO {
 	@Override
 	public void ajouter(I_Produit produit) {
 		try {
+			
 			rs.moveToInsertRow();
 			rs.updateString("nomProduit", produit.getNom());
 			rs.updateDouble("prixHT", produit.getPrixUnitaireHT());
 			rs.updateInt("qte", produit.getQuantite());
+			rs.updateString("nomCatalogue", ctrl_catalogue.getCatalogue().getNom());
 			rs.insertRow();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,6 +60,8 @@ public class ProduitDAO_Oracle implements I_ProduitDAO {
 	public List<I_Produit> getProduits() {
 		List<I_Produit> listeProduits = new ArrayList<I_Produit>();
 		try {
+			pstCata.setString(1, ctrl_catalogue.getCatalogue().getNom());
+			rs = pstCata.executeQuery();
 			while (rs.next()) {
 				listeProduits.add(gererProduit(rs));
 			}

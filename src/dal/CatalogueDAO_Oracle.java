@@ -3,6 +3,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import metier.Catalogue;
 import metier.I_Catalogue;
 
@@ -44,13 +46,14 @@ public class CatalogueDAO_Oracle implements I_CatalogueDAO {
 	@Override
 	public void ajouter(String nomCatalogue) {
 		try {
+			
 			rs = st.executeQuery("SELECT nomCatalogue from Catalogues order by nomCatalogue asc");
 			rs.moveToInsertRow();
 			rs.updateString("nomCatalogue", nomCatalogue);
 			rs.insertRow();
 			rs = st.executeQuery("SELECT nomCatalogue from Catalogues order by nomCatalogue asc");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Un catalogue existant possède déjà ce nom !", "Erreur Ajout Catalogue", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}
@@ -78,7 +81,7 @@ public class CatalogueDAO_Oracle implements I_CatalogueDAO {
 			pst.setString(1, nomCatalogue);
 			rs = pst.executeQuery();
 			if(rs.next()) {
-				gererCatalogue(rs);
+				return gererCatalogue(rs);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

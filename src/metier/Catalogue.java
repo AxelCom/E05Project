@@ -6,18 +6,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
+import controllers.ctrl_catalogue;
 import dal.FabriqueConcreteOracle;
 import dal.I_ProduitDAO;
 
 public class Catalogue implements I_Catalogue{
 	
 	private ArrayList<I_Produit> lesProduits = new ArrayList<I_Produit>();
-	private static I_ProduitDAO connexionProduits = FabriqueConcreteOracle.getInstance().createConnexionI_PrdoduitOracle();
+	private static I_ProduitDAO connexionProduits;
 	private String nom;
 	
 	public Catalogue(String nom) {
 		this.nom = nom;
-		addProduits(connexionProduits.getProduits());
+		connexionProduits = ctrl_catalogue.getConnexionProduit();
 	}
 	
 	@Override
@@ -43,8 +46,10 @@ public class Catalogue implements I_Catalogue{
 				lesProduits.add(leProduit);
 				connexionProduits.ajouter(leProduit);
 				return true;
+			}else {
+				JOptionPane.showMessageDialog(null, "Verifiez :\n- Qu'il n'existe pas déjà un produit ayant le même nom \n- Que le prix soit positif \n- Que le Stock soit égal ou supérieur à 0", "Erreur lors de l'ajout d'un Produit", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
-			return false;
 		}
 		catch(NullPointerException e){
 			return false;

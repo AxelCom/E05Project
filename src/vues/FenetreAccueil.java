@@ -114,12 +114,12 @@ public class FenetreAccueil extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == btSelectionner)
 		{
-			String texteSelection = (String)cmbSupprimer.getSelectedItem();
+			String texteSelection = (String)cmbSelectionner.getSelectedItem();
 			if (texteSelection != null) 
 			{
-				System.out.println("selectionne catalogue "+texteSelection);
 				ctrl_catalogue.setCatalogue(texteSelection);
 				this.dispose();
+				new FenetrePrincipale();
 			}
 		}	
 	}

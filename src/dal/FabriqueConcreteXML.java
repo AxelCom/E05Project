@@ -1,6 +1,6 @@
 package dal;
 
-public class FabriqueConcreteXML {
+public class FabriqueConcreteXML implements FabriqueDAO{
 	
 	private static FabriqueConcreteXML instance = null;
 	
@@ -14,12 +14,14 @@ public class FabriqueConcreteXML {
 		return instance;
 	}
 	
-	public I_ProduitDAO createConnexionI_PrdoduitXML() {
-			return new AdapterProduitDAO_XML();
-	}
-	
-	public I_CatalogueDAO createConnexionI_CatalogueXML() {
+	@Override
+	public I_CatalogueDAO CreateCatalogueDAO() {
 		return new CatalogueDAO_XML();
-}
+	}
+
+	@Override
+	public I_ProduitDAO CreateProduitsDAO() {
+		return new AdapterProduitDAO_XML();	
+	}
 
 }
